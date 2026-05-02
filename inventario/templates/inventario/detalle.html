@@ -1,0 +1,56 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Columna de la Imagen -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm p-3">
+            {% if componente.imagen %}
+                <img src="{{ componente.imagen.url }}" class="img-fluid rounded" alt="{{ componente.nombre }}">
+            {% else %}
+                <img src="https://via.placeholder.com/500" class="img-fluid rounded" alt="Sin imagen">
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Columna de Información -->
+    <div class="col-md-6">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'catalogo' %}">Inicio</a></li>
+                <li class="breadcrumb-item active">{{ componente.categoria }}</li>
+            </ol>
+        </nav>
+        
+        <h1 class="h2 mb-3">{{ componente.nombre }}</h1>
+        <p class="badge bg-dark fs-6">{{ componente.marca }}</p>
+        <h3 class="text-success mb-4">${{ componente.precio }}</h3>
+
+        <div class="card mb-4">
+            <div class="card-header bg-white fw-bold">Descripción</div>
+            <div class="card-body">
+                <p>{{ componente.descripcion|default:"Sin descripción disponible." }}</p>
+            </div>
+        </div>
+
+        <!-- Tabla de Especificaciones Técnicas -->
+        <h5 class="mb-3">Especificaciones Técnicas</h5>
+        <table class="table table-striped border">
+            <tbody>
+                {% for clave, valor in componente.especificaciones_tecnicas.items %}
+                <tr>
+                    <th class="w-50">{{ clave|capfirst }}</th>
+                    <td>{{ valor }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="text-muted small">No hay detalles técnicos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <p class="text-muted small mt-3">Disponibilidad en almacén: <strong>{{ componente.stock }} unidades</strong></p>
+    </div>
+</div>
+{% endblock %}

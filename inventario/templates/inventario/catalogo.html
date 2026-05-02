@@ -1,0 +1,24 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Catálogo de Componentes</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for componente in componentes %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            {% if componente.imagen %}
+                <img src="{{ componente.imagen.url }}" class="card-img-top" alt="{{ componente.nombre }}">
+            {% else %}
+                <img src="https://via.placeholder.com/200" class="card-img-top" alt="Sin imagen">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <span class="badge bg-secondary mb-2">{{ componente.marca }}</span>
+                <h6 class="card-title">{{ componente.nombre|truncatechars:60 }}</h6>
+                <p class="card-text fw-bold text-success mt-auto">${{ componente.precio }}</p>
+                <a href="{% url 'detalle_componente' componente.pk %}" class="btn btn-outline-dark btn-sm mt-2">Especificaciones</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
