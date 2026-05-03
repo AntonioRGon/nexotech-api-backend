@@ -1,10 +1,20 @@
-from django.urls import path
-from .views import ComponenteListView, ComponenteDetailView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ComponenteListView, ComponenteDetailView, ComponenteViewSet
+
+# Configuración del Router para la API
+router = DefaultRouter()
+router.register(r'componentes', ComponenteViewSet)
 
 urlpatterns = [
-    # Esta es la ruta raíz de la app (ej: http://127.0.0.1:8000/)
+    # -----------------------------------
+    # RUTAS WEB (Tu catálogo visual en HTML)
+    # -----------------------------------
     path('', ComponenteListView.as_view(), name='catalogo'),
-    
-    # Esta es la ruta para ver un producto específico
     path('componente/<int:pk>/', ComponenteDetailView.as_view(), name='detalle_componente'),
+    
+    # -----------------------------------
+    # RUTAS API (Tu Backend JSON para NexoTech)
+    # -----------------------------------
+    path('api/', include(router.urls)), 
 ]
