@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
 from rest_framework import viewsets
-from .models import Componente
-from .serializers import ComponenteSerializer
+from .models import Componente, ConfiguracionPC
+from .serializers import ComponenteSerializer, ConfiguracionPCSerializer
 
 # ==========================================
 # 1. VISTAS TRADICIONALES (Para páginas HTML)
@@ -22,3 +22,17 @@ class ComponenteDetailView(DetailView):
 class ComponenteViewSet(viewsets.ModelViewSet):
     queryset = Componente.objects.all()
     serializer_class = ComponenteSerializer
+    
+class ConfiguracionPCViewSet(viewsets.ModelViewSet):
+    queryset = ConfiguracionPC.objects.all()
+    serializer_class = ConfiguracionPCSerializer
+    
+class ComponenteViewSet(viewsets.ModelViewSet):
+    # Ordenamos por ID para que la paginación sea exacta
+    queryset = Componente.objects.all().order_by('id')
+    serializer_class = ComponenteSerializer
+
+class ConfiguracionPCViewSet(viewsets.ModelViewSet):
+    # Hacemos lo mismo para las PCs ensambladas
+    queryset = ConfiguracionPC.objects.all().order_by('id')
+    serializer_class = ConfiguracionPCSerializer
