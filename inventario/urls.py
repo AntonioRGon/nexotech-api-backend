@@ -1,10 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ComponenteListView, ComponenteDetailView, ComponenteViewSet
+from .views import ComponenteListView, ComponenteDetailView, ComponenteViewSet, ConfiguracionPCViewSet
+
 
 # Configuración del Router para la API
 router = DefaultRouter()
 router.register(r'componentes', ComponenteViewSet)
+router.register(r'configuraciones', ConfiguracionPCViewSet)
 
 urlpatterns = [
     # -----------------------------------
